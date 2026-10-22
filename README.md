@@ -137,6 +137,10 @@ npm run dev
 Opens on `http://localhost:3000`. Built on `next@16.2.4`, `react@19.2.4`,
 `typescript@^5`, `zustand@^5.0.12`, `recharts@^3.8.1`, Tailwind CSS v4.
 
+> **Dev note:** access the dev server via `localhost`, not `127.0.0.1` — Next.js 16's dev
+> server blocks cross-origin HMR requests from a bare IP by default, which otherwise triggers
+> a reload loop that resets the in-memory simulation state on every render.
+
 ### Deployment
 
 - **Backend** deploys to [Render](https://render.com) via the included `render.yaml` blueprint
@@ -149,12 +153,16 @@ Opens on `http://localhost:3000`. Built on `next@16.2.4`, `react@19.2.4`,
 
 ## Screenshots
 
-_Drop dashboard screenshots in `docs/screenshots/` and reference them here, e.g._
+**Initial state** (select countries, pick a scenario, hit Run Simulation):
 
-```markdown
-![Dashboard overview](docs/screenshots/dashboard.png)
-![Shock attribution chart](docs/screenshots/attribution.png)
-```
+![Dashboard, ready to simulate](docs/screenshots/dashboard-initial.png)
+
+**A real 30-step recession simulation across 4 countries** — all ten chart types populated
+live from an actual `/api/simulate` run (economic indicators, radar profile, per-country
+snapshot, GDP-vs-inflation scatter, poverty-rate spread, shock attribution, country
+intelligence cards):
+
+![Dashboard with a real simulation run](docs/screenshots/dashboard-run.png)
 
 ## Limitations
 
