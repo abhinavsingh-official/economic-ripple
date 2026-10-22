@@ -29,6 +29,17 @@ prediction of what will actually happen.
 - Export a self-contained `.html` report (inline SVG charts, no external dependencies,
   opens offline) with one click.
 
+**Ready to simulate** — pick countries and a scenario on the left, hit Run:
+
+![Dashboard, ready to simulate](docs/screenshots/dashboard-initial.png)
+
+**A real 30-step recession simulation across 4 countries**, all ten chart types
+populated live from an actual `/api/simulate` run (economic indicators, radar profile,
+per-country snapshot, GDP-vs-inflation scatter, poverty-rate spread, shock attribution,
+country intelligence cards):
+
+![Dashboard with a real simulation run](docs/screenshots/dashboard-run.png)
+
 ## Architecture
 
 ```
@@ -155,19 +166,6 @@ Live now:
 - **Frontend**: [economic-ripple.vercel.app](https://economic-ripple.vercel.app), deployed on
   [Vercel](https://vercel.com) from `economic-ripple-ui/` with `NEXT_PUBLIC_API_BASE_URL` pointed
   at the Render backend above.
-
-## Screenshots
-
-**Initial state** (select countries, pick a scenario, hit Run Simulation):
-
-![Dashboard, ready to simulate](docs/screenshots/dashboard-initial.png)
-
-**A real 30-step recession simulation across 4 countries** — all ten chart types populated
-live from an actual `/api/simulate` run (economic indicators, radar profile, per-country
-snapshot, GDP-vs-inflation scatter, poverty-rate spread, shock attribution, country
-intelligence cards):
-
-![Dashboard with a real simulation run](docs/screenshots/dashboard-run.png)
 
 ## Limitations
 
