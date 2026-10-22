@@ -1,5 +1,8 @@
 # Economic Ripple
 
+**Live demo: [economic-ripple.vercel.app](https://economic-ripple.vercel.app)** (backend on
+Render's free tier — the first request after a period of inactivity can take 30-60s to wake up).
+
 An interactive macroeconomic "what-if" simulator. It models how a shock — recession,
 boom, stagflation, social crisis, recovery — propagates through seven interdependent
 variables (GDP growth, inflation, unemployment, poverty, urbanisation, depression
@@ -143,13 +146,15 @@ Opens on `http://localhost:3000`. Built on `next@16.2.4`, `react@19.2.4`,
 
 ### Deployment
 
-- **Backend** deploys to [Render](https://render.com) via the included `render.yaml` blueprint
-  (free tier). Set `CORS_ALLOW_ORIGINS` to the deployed frontend's origin (e.g.
-  `https://economic-ripple.vercel.app`) once that URL is known. Note: Render's free tier spins
-  the service down after inactivity, so the first request after a cold start can take 30-60s.
-- **Frontend** deploys to [Vercel](https://vercel.com) from `economic-ripple-ui/`. Set
-  `NEXT_PUBLIC_API_BASE_URL` to the deployed backend's URL (e.g.
-  `https://economic-ripple-backend.onrender.com`).
+Live now:
+
+- **Backend**: [economic-ripple-backend.onrender.com](https://economic-ripple-backend.onrender.com),
+  deployed on [Render](https://render.com)'s free tier via the included `render.yaml` blueprint.
+  `CORS_ALLOW_ORIGINS` is set to the Vercel frontend's origin. Free tier spins the service down
+  after inactivity, so the first request after a cold start can take 30-60s.
+- **Frontend**: [economic-ripple.vercel.app](https://economic-ripple.vercel.app), deployed on
+  [Vercel](https://vercel.com) from `economic-ripple-ui/` with `NEXT_PUBLIC_API_BASE_URL` pointed
+  at the Render backend above.
 
 ## Screenshots
 
