@@ -137,6 +137,16 @@ npm run dev
 Opens on `http://localhost:3000`. Built on `next@16.2.4`, `react@19.2.4`,
 `typescript@^5`, `zustand@^5.0.12`, `recharts@^3.8.1`, Tailwind CSS v4.
 
+### Deployment
+
+- **Backend** deploys to [Render](https://render.com) via the included `render.yaml` blueprint
+  (free tier). Set `CORS_ALLOW_ORIGINS` to the deployed frontend's origin (e.g.
+  `https://economic-ripple.vercel.app`) once that URL is known. Note: Render's free tier spins
+  the service down after inactivity, so the first request after a cold start can take 30-60s.
+- **Frontend** deploys to [Vercel](https://vercel.com) from `economic-ripple-ui/`. Set
+  `NEXT_PUBLIC_API_BASE_URL` to the deployed backend's URL (e.g.
+  `https://economic-ripple-backend.onrender.com`).
+
 ## Screenshots
 
 _Drop dashboard screenshots in `docs/screenshots/` and reference them here, e.g._
