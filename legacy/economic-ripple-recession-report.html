@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Economic Ripple · Recession Scenario Report</title>
+  
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: #F7F5F3;
+    color: #344054;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 0;
+    margin: 0;
+  }
+
+  .page-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 0 48px 0;
+  }
+
+  /* ── Header ── */
+  .report-header {
+    background: linear-gradient(135deg, #1A0A04 0%, #2D1208 100%);
+    padding: 48px 40px 36px;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+  .brand-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #E8541C;
+    margin-bottom: 12px;
+  }
+  .report-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .report-date {
+    font-size: 12px;
+    color: #A09890;
+    margin-bottom: 24px;
+  }
+  .meta-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .meta-chip {
+    display: inline-flex;
+    flex-direction: column;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 8px 14px;
+    min-width: 130px;
+  }
+  .chip-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #A09890;
+    margin-bottom: 2px;
+  }
+  .chip-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  /* ── Sections ── */
+  .section {
+    background: #fff;
+    border: 1px solid #EDE9E4;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 0 24px 20px;
+  }
+  .section-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #A09890;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #EDE9E4;
+  }
+
+  /* ── Executive Summary ── */
+  .findings {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .findings li {
+    border-left: 3px solid #E8541C;
+    background: #FAF8F6;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #344054;
+  }
+
+  /* ── Configuration ── */
+  .config-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .config-card {
+    background: #FAF8F6;
+    border: 1px solid #EDE9E4;
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .config-card-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #A09890;
+    margin-bottom: 10px;
+  }
+  .config-scenario-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1A1614;
+    margin-bottom: 6px;
+  }
+  .config-scenario-desc {
+    font-size: 12px;
+    color: #6B6560;
+    line-height: 1.5;
+  }
+  .shock-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .shock-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+  }
+  .shock-var { color: #344054; }
+  .shock-val { font-weight: 700; font-family: monospace; }
+  .country-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .country-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #fff;
+    border: 1px solid #EDE9E4;
+    border-radius: 20px;
+    padding: 3px 10px 3px 6px;
+    font-size: 12px;
+    color: #344054;
+  }
+  .country-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .arch-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: #344054;
+    margin-bottom: 6px;
+  }
+  .arch-formula {
+    font-family: monospace;
+    font-size: 13px;
+    color: #E8541C;
+    background: rgba(232,84,28,0.06);
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .arch-meta {
+    font-size: 11px;
+    color: #6B6560;
+  }
+
+  /* ── Variable Analysis ── */
+  .var-intro {
+    font-size: 12px;
+    line-height: 1.5;
+    margin-top: -4px;
+  }
+  .var-section-header {
+    padding: 10px 14px;
+    background: #FAF8F6;
+    border-radius: 8px;
+    margin-bottom: 14px;
+  }
+  .var-label {
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .chart-container {
+    margin-bottom: 14px;
+    overflow-x: auto;
+  }
+
+  /* ── Tables ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .data-table thead tr {
+    background: #FAF8F6;
+  }
+  .data-table th {
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #A09890;
+    border-bottom: 1px solid #EDE9E4;
+  }
+  .data-table td {
+    padding: 8px 10px;
+    color: #344054;
+    border-bottom: 1px solid #F3F0ED;
+  }
+  .data-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .data-table tbody tr:hover {
+    background: #FAF8F6;
+  }
+
+  /* ── Country Profiles ── */
+  .country-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .country-card {
+    border: 1px solid #EDE9E4;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .country-card-header {
+    padding: 12px 14px;
+    background: #FAF8F6;
+    border-bottom: 1px solid #EDE9E4;
+    display: flex;
+    align-items: center;
+  }
+  .country-card-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1A1614;
+  }
+
+  /* ── Footer ── */
+  .report-footer {
+    text-align: center;
+    padding: 24px 40px;
+    font-size: 11px;
+    color: #A09890;
+    border-top: 1px solid #EDE9E4;
+    margin: 24px 24px 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .footer-divider { color: #C9C0BB; }
+
+  /* ── Utility ── */
+  .muted { color: #A09890; }
+
+  /* ── Print ── */
+  @media print {
+    body { background: #fff; }
+    .section, .country-card, .config-card, .var-section { break-inside: avoid; }
+    .report-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+  <div class="page-wrap">
+    
+<div class="report-header">
+  <div class="brand-label">Economic Ripple &middot; Simulation Report</div>
+  <h1 class="report-title">Analysis: Recession Scenario</h1>
+  <div class="report-date">Generated 4/23/2026, 3:29:32 PM</div>
+  <div class="meta-chips"><div class="meta-chip"><span class="chip-label">Scenario</span><span class="chip-value">Recession</span></div><div class="meta-chip"><span class="chip-label">Countries</span><span class="chip-value">4 selected</span></div><div class="meta-chip"><span class="chip-label">Steps</span><span class="chip-value">30 time steps</span></div><div class="meta-chip"><span class="chip-label">Variables</span><span class="chip-value">7 variables</span></div></div>
+</div>
+    
+<div class="section">
+  <div class="section-title">Executive Summary</div>
+  <ul class="findings"><li><strong>India</strong> recorded the highest final GDP growth at <strong>0.17%</strong>, while <strong>Germany</strong> posted the lowest at <strong>0.10%</strong>.</li><li><strong>India</strong> experienced the largest unemployment shift — <strong>-1.27 pp</strong> from simulation start to end.</li><li>Final-step inflation ranged from <strong>4.45%</strong> to <strong>4.96%</strong> across all simulated countries.</li><li>Average poverty rate <strong>increased</strong> by <strong>4.02 pp</strong> on average across all countries over 30 steps.</li></ul>
+</div>
+    
+<div class="section">
+  <div class="section-title">Simulation Configuration</div>
+  <div class="config-grid">
+    <div class="config-card">
+      <div class="config-card-title">Scenario</div>
+      <div class="config-scenario-name">Recession</div>
+      <div class="config-scenario-desc">Economic contraction with rising unemployment, falling output, and reduced consumer spending.</div>
+    </div>
+    <div class="config-card">
+      <div class="config-card-title">Manual Shocks</div>
+      <div class="shock-list"><div class="shock-row"><span class="shock-var">GDP Growth</span><span class="shock-val" style="color:#DC2626">-0.500</span></div><div class="shock-row"><span class="shock-var">Inflation</span><span class="shock-val" style="color:#16A34A">+0.550</span></div><div class="shock-row"><span class="shock-var">Unemployment</span><span class="shock-val" style="color:#DC2626">-0.350</span></div><div class="shock-row"><span class="shock-var">Poverty Rate</span><span class="shock-val" style="color:#16A34A">+0.700</span></div></div>
+      <div class="muted" style="margin-top:8px;font-size:11px;">Additive on top of scenario vector at each step.</div>
+    </div>
+    <div class="config-card">
+      <div class="config-card-title">Countries Modeled</div>
+      <div class="country-pills"><span class="country-pill"><span class="country-dot" style="background:#E8541C"></span>China</span><span class="country-pill"><span class="country-dot" style="background:#2563EB"></span>Germany</span><span class="country-pill"><span class="country-dot" style="background:#16A34A"></span>India</span><span class="country-pill"><span class="country-dot" style="background:#DC2626"></span>Japan</span></div>
+    </div>
+    <div class="config-card">
+      <div class="config-card-title">Model Architecture</div>
+      <div class="arch-text">System Dynamics &middot; Linear State-Space</div>
+      <div class="arch-formula">x(t+1) = A&middot;x(t) + &sigma; + &epsilon;</div>
+      <div class="arch-meta">7&times;7 interaction matrix &middot; 30 time steps &middot; Countries run independently</div>
+    </div>
+  </div>
+</div>
+    
+<div class="section">
+  <div class="section-title">Variable Analysis</div>
+  <div class="var-intro muted">Line charts show all selected countries across the simulation horizon. Table shows start/end values and net change per country.</div>
+</div>
+
+<div class="section var-section">
+  <div class="var-section-header" style="border-left:4px solid #E8541C;">
+    <span class="var-label" style="color:#E8541C">GDP Growth</span>
+  </div>
+  <div class="chart-container"><svg xmlns="http://www.w3.org/2000/svg" width="560" height="110" style="display:block;max-width:100%;">
+    <line x1="44" y1="6.0" x2="550" y2="6.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="26.5" x2="550" y2="26.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="47.0" x2="550" y2="47.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="67.5" x2="550" y2="67.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="88.0" x2="550" y2="88.0" stroke="#EDE9E4" stroke-width="1"/>
+    <text x="40" y="10.0" text-anchor="end" font-size="9" fill="#A09890">0.3</text><text x="40" y="51.0" text-anchor="end" font-size="9" fill="#A09890">-0.9</text><text x="40" y="92.0" text-anchor="end" font-size="9" fill="#A09890">-2.1</text>
+    <text x="44.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t0</text><text x="305.7" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t15</text><text x="550.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t29</text>
+    <polyline points="44.0,36.4 61.4,54.3 78.9,56.8 96.3,46.7 113.8,32.7 131.2,19.2 148.7,15.8 166.1,10.3 183.6,13.9 201.0,10.9 218.5,8.6 235.9,8.6 253.4,8.5 270.8,7.0 288.3,7.1 305.7,7.0 323.2,6.2 340.6,6.1 358.1,9.2 375.5,8.5 393.0,10.5 410.4,11.3 427.9,10.7 445.3,10.3 462.8,11.1 480.2,13.5 497.7,11.9 515.1,12.0 532.6,10.2 550.0,10.7" fill="none" stroke="#E8541C" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,82.8 61.4,88.0 78.9,78.6 96.3,66.2 113.8,51.7 131.2,40.2 148.7,29.2 166.1,22.1 183.6,18.3 201.0,16.9 218.5,10.7 235.9,9.7 253.4,12.5 270.8,14.0 288.3,11.9 305.7,15.0 323.2,14.1 340.6,14.2 358.1,12.4 375.5,13.8 393.0,11.8 410.4,11.3 427.9,11.8 445.3,14.6 462.8,17.8 480.2,14.2 497.7,17.0 515.1,13.8 532.6,13.4 550.0,13.1" fill="none" stroke="#2563EB" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,24.5 61.4,48.7 78.9,51.7 96.3,47.6 113.8,36.0 131.2,24.7 148.7,12.7 166.1,13.1 183.6,11.7 201.0,10.8 218.5,11.5 235.9,10.2 253.4,8.6 270.8,6.0 288.3,8.2 305.7,9.6 323.2,8.6 340.6,6.8 358.1,8.2 375.5,9.7 393.0,10.1 410.4,10.7 427.9,9.5 445.3,10.6 462.8,7.4 480.2,8.6 497.7,9.3 515.1,8.9 532.6,7.8 550.0,10.6" fill="none" stroke="#16A34A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,74.7 61.4,83.3 78.9,76.7 96.3,65.7 113.8,54.2 131.2,42.7 148.7,31.6 166.1,23.3 183.6,17.8 201.0,16.3 218.5,14.9 235.9,17.5 253.4,19.0 270.8,18.1 288.3,16.5 305.7,14.3 323.2,17.6 340.6,20.2 358.1,19.3 375.5,17.3 393.0,17.2 410.4,15.6 427.9,13.9 445.3,15.1 462.8,14.0 480.2,11.5 497.7,12.3 515.1,13.8 532.6,13.1 550.0,12.9" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg></div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Start (t0)</th>
+        <th>End (tN)</th>
+        <th>Delta</th>
+        <th>Trend</th>
+      </tr>
+    </thead>
+    <tbody><tr>
+          <td>China</td>
+          <td>-0.58</td>
+          <td>0.17</td>
+          <td style="color:#16A34A">+0.75</td>
+          <td>&#9650; Rising</td>
+        </tr><tr>
+          <td>Germany</td>
+          <td>-1.93</td>
+          <td>0.10</td>
+          <td style="color:#16A34A">+2.04</td>
+          <td>&#9650; Rising</td>
+        </tr><tr>
+          <td>India</td>
+          <td>-0.23</td>
+          <td>0.17</td>
+          <td style="color:#16A34A">+0.41</td>
+          <td>&#9650; Rising</td>
+        </tr><tr>
+          <td>Japan</td>
+          <td>-1.70</td>
+          <td>0.11</td>
+          <td style="color:#16A34A">+1.80</td>
+          <td>&#9650; Rising</td>
+        </tr></tbody>
+  </table>
+</div>
+
+<div class="section var-section">
+  <div class="var-section-header" style="border-left:4px solid #DC2626;">
+    <span class="var-label" style="color:#DC2626">Inflation</span>
+  </div>
+  <div class="chart-container"><svg xmlns="http://www.w3.org/2000/svg" width="560" height="110" style="display:block;max-width:100%;">
+    <line x1="44" y1="6.0" x2="550" y2="6.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="26.5" x2="550" y2="26.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="47.0" x2="550" y2="47.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="67.5" x2="550" y2="67.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="88.0" x2="550" y2="88.0" stroke="#EDE9E4" stroke-width="1"/>
+    <text x="40" y="10.0" text-anchor="end" font-size="9" fill="#A09890">5.0</text><text x="40" y="51.0" text-anchor="end" font-size="9" fill="#A09890">2.4</text><text x="40" y="92.0" text-anchor="end" font-size="9" fill="#A09890">-0.1</text>
+    <text x="44.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t0</text><text x="305.7" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t15</text><text x="550.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t29</text>
+    <polyline points="44.0,83.9 61.4,75.6 78.9,67.8 96.3,59.3 113.8,50.7 131.2,41.2 148.7,34.4 166.1,29.3 183.6,25.0 201.0,22.2 218.5,20.5 235.9,18.4 253.4,18.3 270.8,16.6 288.3,15.2 305.7,15.9 323.2,16.5 340.6,15.4 358.1,14.9 375.5,15.1 393.0,14.9 410.4,14.9 427.9,15.7 445.3,15.4 462.8,14.9 480.2,13.3 497.7,12.5 515.1,14.1 532.6,14.0 550.0,14.8" fill="none" stroke="#E8541C" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,88.0 61.4,80.6 78.9,72.9 96.3,63.3 113.8,55.2 131.2,46.1 148.7,39.6 166.1,30.1 183.6,24.6 201.0,20.6 218.5,17.6 235.9,16.9 253.4,14.4 270.8,11.7 288.3,10.6 305.7,8.9 323.2,9.5 340.6,9.6 358.1,8.5 375.5,8.9 393.0,8.7 410.4,8.9 427.9,8.6 445.3,9.5 462.8,11.2 480.2,10.2 497.7,9.3 515.1,9.6 532.6,9.7 550.0,9.1" fill="none" stroke="#2563EB" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,74.9 61.4,64.1 78.9,56.1 96.3,48.7 113.8,40.9 131.2,33.2 148.7,26.6 166.1,21.4 183.6,18.8 201.0,17.1 218.5,14.3 235.9,14.8 253.4,13.7 270.8,11.4 288.3,11.2 305.7,10.5 323.2,9.6 340.6,10.5 358.1,10.5 375.5,9.8 393.0,8.2 410.4,8.8 427.9,9.9 445.3,9.4 462.8,9.8 480.2,9.7 497.7,10.5 515.1,10.2 532.6,10.4 550.0,12.2" fill="none" stroke="#16A34A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,83.1 61.4,77.1 78.9,68.4 96.3,60.2 113.8,51.3 131.2,43.4 148.7,34.6 166.1,28.6 183.6,24.2 201.0,18.4 218.5,14.2 235.9,10.5 253.4,8.8 270.8,7.4 288.3,6.8 305.7,6.7 323.2,7.1 340.6,6.5 358.1,6.0 375.5,6.0 393.0,6.0 410.4,6.0 427.9,6.0 445.3,6.0 462.8,6.0 480.2,7.2 497.7,8.4 515.1,6.2 532.6,6.3 550.0,6.6" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg></div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Start (t0)</th>
+        <th>End (tN)</th>
+        <th>Delta</th>
+        <th>Trend</th>
+      </tr>
+    </thead>
+    <tbody><tr>
+          <td>China</td>
+          <td>0.12</td>
+          <td>4.45</td>
+          <td style="color:#16A34A">+4.33</td>
+          <td>&#9650; Rising</td>
+        </tr><tr>
+          <td>Germany</td>
+          <td>-0.14</td>
+          <td>4.80</td>
+          <td style="color:#16A34A">+4.94</td>
+          <td>&#9650; Rising</td>
+        </tr><tr>
+          <td>India</td>
+          <td>0.68</td>
+          <td>4.61</td>
+          <td style="color:#16A34A">+3.93</td>
+          <td>&#9650; Rising</td>
+        </tr><tr>
+          <td>Japan</td>
+          <td>0.16</td>
+          <td>4.96</td>
+          <td style="color:#16A34A">+4.80</td>
+          <td>&#9650; Rising</td>
+        </tr></tbody>
+  </table>
+</div>
+
+<div class="section var-section">
+  <div class="var-section-header" style="border-left:4px solid #D97706;">
+    <span class="var-label" style="color:#D97706">Unemployment</span>
+  </div>
+  <div class="chart-container"><svg xmlns="http://www.w3.org/2000/svg" width="560" height="110" style="display:block;max-width:100%;">
+    <line x1="44" y1="6.0" x2="550" y2="6.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="26.5" x2="550" y2="26.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="47.0" x2="550" y2="47.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="67.5" x2="550" y2="67.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="88.0" x2="550" y2="88.0" stroke="#EDE9E4" stroke-width="1"/>
+    <text x="40" y="10.0" text-anchor="end" font-size="9" fill="#A09890">-0.0</text><text x="40" y="51.0" text-anchor="end" font-size="9" fill="#A09890">-0.8</text><text x="40" y="92.0" text-anchor="end" font-size="9" fill="#A09890">-1.6</text>
+    <text x="44.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t0</text><text x="305.7" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t15</text><text x="550.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t29</text>
+    <polyline points="44.0,37.9 61.4,36.0 78.9,31.7 96.3,31.5 113.8,27.7 131.2,28.0 148.7,31.2 166.1,30.9 183.6,36.1 201.0,39.3 218.5,41.3 235.9,42.6 253.4,47.5 270.8,55.4 288.3,55.9 305.7,58.7 323.2,60.5 340.6,64.1 358.1,69.8 375.5,73.0 393.0,75.4 410.4,80.7 427.9,80.8 445.3,80.2 462.8,84.4 480.2,82.5 497.7,86.0 515.1,88.0 532.6,86.5 550.0,84.5" fill="none" stroke="#E8541C" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,45.2 61.4,39.5 78.9,28.8 96.3,23.4 113.8,22.2 131.2,23.2 148.7,23.7 166.1,24.3 183.6,27.8 201.0,32.4 218.5,31.6 235.9,31.7 253.4,36.1 270.8,37.5 288.3,41.8 305.7,41.2 323.2,43.4 340.6,43.4 358.1,44.3 375.5,42.2 393.0,45.4 410.4,50.2 427.9,50.9 445.3,54.1 462.8,55.3 480.2,57.8 497.7,55.9 515.1,64.6 532.6,64.3 550.0,64.9" fill="none" stroke="#2563EB" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,18.0 61.4,16.6 78.9,12.2 96.3,10.5 113.8,10.5 131.2,6.0 148.7,11.5 166.1,11.1 183.6,16.6 201.0,19.0 218.5,23.9 235.9,27.9 253.4,27.5 270.8,32.9 288.3,36.1 305.7,37.7 323.2,46.7 340.6,48.1 358.1,47.8 375.5,52.8 393.0,52.1 410.4,57.2 427.9,62.0 445.3,62.8 462.8,65.1 480.2,65.7 497.7,69.4 515.1,75.4 532.6,82.9 550.0,82.8" fill="none" stroke="#16A34A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,53.4 61.4,42.6 78.9,32.4 96.3,27.5 113.8,26.1 131.2,24.4 148.7,24.7 166.1,22.1 183.6,19.5 201.0,19.7 218.5,24.8 235.9,29.2 253.4,28.4 270.8,30.3 288.3,31.3 305.7,33.9 323.2,34.7 340.6,38.9 358.1,38.9 375.5,41.0 393.0,40.7 410.4,43.5 427.9,45.1 445.3,45.0 462.8,46.3 480.2,46.8 497.7,49.5 515.1,52.3 532.6,49.6 550.0,52.1" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg></div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Start (t0)</th>
+        <th>End (tN)</th>
+        <th>Delta</th>
+        <th>Trend</th>
+      </tr>
+    </thead>
+    <tbody><tr>
+          <td>China</td>
+          <td>-0.64</td>
+          <td>-1.56</td>
+          <td style="color:#DC2626">-0.91</td>
+          <td>&#9660; Falling</td>
+        </tr><tr>
+          <td>Germany</td>
+          <td>-0.79</td>
+          <td>-1.17</td>
+          <td style="color:#DC2626">-0.38</td>
+          <td>&#9660; Falling</td>
+        </tr><tr>
+          <td>India</td>
+          <td>-0.25</td>
+          <td>-1.52</td>
+          <td style="color:#DC2626">-1.27</td>
+          <td>&#9660; Falling</td>
+        </tr><tr>
+          <td>Japan</td>
+          <td>-0.95</td>
+          <td>-0.92</td>
+          <td style="color:#16A34A">+0.03</td>
+          <td>&#9650; Rising</td>
+        </tr></tbody>
+  </table>
+</div>
+
+<div class="section var-section">
+  <div class="var-section-header" style="border-left:4px solid #7C3AED;">
+    <span class="var-label" style="color:#7C3AED">Poverty Rate</span>
+  </div>
+  <div class="chart-container"><svg xmlns="http://www.w3.org/2000/svg" width="560" height="110" style="display:block;max-width:100%;">
+    <line x1="44" y1="6.0" x2="550" y2="6.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="26.5" x2="550" y2="26.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="47.0" x2="550" y2="47.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="67.5" x2="550" y2="67.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="88.0" x2="550" y2="88.0" stroke="#EDE9E4" stroke-width="1"/>
+    <text x="40" y="10.0" text-anchor="end" font-size="9" fill="#A09890">5.0</text><text x="40" y="51.0" text-anchor="end" font-size="9" fill="#A09890">2.7</text><text x="40" y="92.0" text-anchor="end" font-size="9" fill="#A09890">0.5</text>
+    <text x="44.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t0</text><text x="305.7" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t15</text><text x="550.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t29</text>
+    <polyline points="44.0,71.4 61.4,54.3 78.9,37.6 96.3,22.4 113.8,7.0 131.2,6.0 148.7,6.0 166.1,6.0 183.6,6.0 201.0,6.0 218.5,6.0 235.9,6.0 253.4,6.0 270.8,6.0 288.3,6.0 305.7,6.0 323.2,6.0 340.6,6.0 358.1,6.0 375.5,6.0 393.0,6.0 410.4,6.0 427.9,6.0 445.3,6.0 462.8,6.0 480.2,6.0 497.7,6.0 515.1,6.0 532.6,6.0 550.0,6.0" fill="none" stroke="#E8541C" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,88.0 61.4,69.8 78.9,53.3 96.3,36.8 113.8,21.3 131.2,7.8 148.7,6.0 166.1,6.0 183.6,6.0 201.0,6.0 218.5,6.0 235.9,6.0 253.4,6.0 270.8,6.0 288.3,6.0 305.7,6.0 323.2,6.0 340.6,6.0 358.1,6.0 375.5,6.0 393.0,6.0 410.4,6.0 427.9,6.0 445.3,6.0 462.8,6.0 480.2,6.0 497.7,6.0 515.1,6.0 532.6,6.0 550.0,6.0" fill="none" stroke="#2563EB" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,69.7 61.4,52.2 78.9,35.1 96.3,20.0 113.8,6.0 131.2,6.0 148.7,6.0 166.1,6.0 183.6,6.0 201.0,6.0 218.5,6.0 235.9,6.0 253.4,6.0 270.8,6.0 288.3,6.0 305.7,6.0 323.2,6.0 340.6,6.0 358.1,6.0 375.5,6.0 393.0,6.0 410.4,6.0 427.9,6.0 445.3,6.0 462.8,6.0 480.2,6.0 497.7,6.0 515.1,6.0 532.6,6.0 550.0,6.0" fill="none" stroke="#16A34A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,86.2 61.4,67.3 78.9,50.0 96.3,35.5 113.8,21.7 131.2,6.0 148.7,6.0 166.1,6.0 183.6,6.0 201.0,6.0 218.5,6.0 235.9,6.0 253.4,6.0 270.8,6.0 288.3,6.0 305.7,6.0 323.2,6.0 340.6,6.0 358.1,6.0 375.5,6.0 393.0,6.0 410.4,6.0 427.9,6.0 445.3,6.0 462.8,6.0 480.2,6.0 497.7,6.0 515.1,6.0 532.6,6.0 550.0,6.0" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg></div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Start (t0)</th>
+        <th>End (tN)</th>
+        <th>Delta</th>
+        <th>Trend</th>
+      </tr>
+    </thead>
+    <tbody><tr>
+          <td>China</td>
+          <td>1.39</td>
+          <td>5.00</td>
+          <td style="color:#16A34A">+3.61</td>
+          <td>&#9650; Rising</td>
+        </tr><tr>
+          <td>Germany</td>
+          <td>0.48</td>
+          <td>5.00</td>
+          <td style="color:#16A34A">+4.52</td>
+          <td>&#9650; Rising</td>
+        </tr><tr>
+          <td>India</td>
+          <td>1.49</td>
+          <td>5.00</td>
+          <td style="color:#16A34A">+3.51</td>
+          <td>&#9650; Rising</td>
+        </tr><tr>
+          <td>Japan</td>
+          <td>0.58</td>
+          <td>5.00</td>
+          <td style="color:#16A34A">+4.42</td>
+          <td>&#9650; Rising</td>
+        </tr></tbody>
+  </table>
+</div>
+
+<div class="section var-section">
+  <div class="var-section-header" style="border-left:4px solid #6B7280;">
+    <span class="var-label" style="color:#6B7280">Mental Health</span>
+  </div>
+  <div class="chart-container"><svg xmlns="http://www.w3.org/2000/svg" width="560" height="110" style="display:block;max-width:100%;">
+    <line x1="44" y1="6.0" x2="550" y2="6.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="26.5" x2="550" y2="26.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="47.0" x2="550" y2="47.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="67.5" x2="550" y2="67.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="88.0" x2="550" y2="88.0" stroke="#EDE9E4" stroke-width="1"/>
+    <text x="40" y="10.0" text-anchor="end" font-size="9" fill="#A09890">3.6</text><text x="40" y="51.0" text-anchor="end" font-size="9" fill="#A09890">2.7</text><text x="40" y="92.0" text-anchor="end" font-size="9" fill="#A09890">1.7</text>
+    <text x="44.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t0</text><text x="305.7" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t15</text><text x="550.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t29</text>
+    <polyline points="44.0,47.6 61.4,49.9 78.9,50.6 96.3,49.5 113.8,48.4 131.2,49.3 148.7,51.4 166.1,51.8 183.6,48.8 201.0,48.2 218.5,49.7 235.9,51.2 253.4,53.7 270.8,51.3 288.3,48.4 305.7,49.9 323.2,51.1 340.6,51.4 358.1,55.3 375.5,56.3 393.0,55.3 410.4,58.1 427.9,61.2 445.3,61.0 462.8,60.6 480.2,63.3 497.7,62.9 515.1,65.6 532.6,65.5 550.0,70.2" fill="none" stroke="#E8541C" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,16.9 61.4,19.9 78.9,16.9 96.3,15.5 113.8,18.9 131.2,21.6 148.7,21.6 166.1,23.0 183.6,24.7 201.0,25.0 218.5,32.7 235.9,32.0 253.4,35.8 270.8,38.4 288.3,40.6 305.7,41.1 323.2,43.0 340.6,44.6 358.1,45.0 375.5,46.0 393.0,44.0 410.4,43.2 427.9,42.3 445.3,43.8 462.8,44.5 480.2,47.7 497.7,49.4 515.1,51.4 532.6,53.7 550.0,53.2" fill="none" stroke="#2563EB" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,6.0 61.4,7.6 78.9,9.7 96.3,8.9 113.8,7.2 131.2,7.2 148.7,10.2 166.1,10.6 183.6,10.0 201.0,12.5 218.5,12.8 235.9,12.6 253.4,12.0 270.8,11.0 288.3,16.3 305.7,15.8 323.2,17.7 340.6,21.5 358.1,25.0 375.5,24.7 393.0,25.7 410.4,27.7 427.9,29.9 445.3,30.7 462.8,31.8 480.2,30.0 497.7,31.5 515.1,32.1 532.6,34.8 550.0,34.0" fill="none" stroke="#16A34A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,70.7 61.4,73.6 78.9,71.2 96.3,71.3 113.8,69.6 131.2,69.4 148.7,67.9 166.1,71.0 183.6,70.5 201.0,70.0 218.5,70.9 235.9,73.0 253.4,72.7 270.8,74.4 288.3,78.5 305.7,78.8 323.2,77.1 340.6,79.3 358.1,79.2 375.5,80.3 393.0,79.9 410.4,79.0 427.9,80.4 445.3,81.8 462.8,80.3 480.2,84.1 497.7,86.6 515.1,87.1 532.6,88.0 550.0,86.4" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg></div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Start (t0)</th>
+        <th>End (tN)</th>
+        <th>Delta</th>
+        <th>Trend</th>
+      </tr>
+    </thead>
+    <tbody><tr>
+          <td>China</td>
+          <td>2.64</td>
+          <td>2.10</td>
+          <td style="color:#DC2626">-0.54</td>
+          <td>&#9660; Falling</td>
+        </tr><tr>
+          <td>Germany</td>
+          <td>3.37</td>
+          <td>2.50</td>
+          <td style="color:#DC2626">-0.86</td>
+          <td>&#9660; Falling</td>
+        </tr><tr>
+          <td>India</td>
+          <td>3.63</td>
+          <td>2.96</td>
+          <td style="color:#DC2626">-0.67</td>
+          <td>&#9660; Falling</td>
+        </tr><tr>
+          <td>Japan</td>
+          <td>2.09</td>
+          <td>1.72</td>
+          <td style="color:#DC2626">-0.37</td>
+          <td>&#9660; Falling</td>
+        </tr></tbody>
+  </table>
+</div>
+
+<div class="section var-section">
+  <div class="var-section-header" style="border-left:4px solid #16A34A;">
+    <span class="var-label" style="color:#16A34A">Urbanization</span>
+  </div>
+  <div class="chart-container"><svg xmlns="http://www.w3.org/2000/svg" width="560" height="110" style="display:block;max-width:100%;">
+    <line x1="44" y1="6.0" x2="550" y2="6.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="26.5" x2="550" y2="26.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="47.0" x2="550" y2="47.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="67.5" x2="550" y2="67.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="88.0" x2="550" y2="88.0" stroke="#EDE9E4" stroke-width="1"/>
+    <text x="40" y="10.0" text-anchor="end" font-size="9" fill="#A09890">1.2</text><text x="40" y="51.0" text-anchor="end" font-size="9" fill="#A09890">-0.9</text><text x="40" y="92.0" text-anchor="end" font-size="9" fill="#A09890">-2.9</text>
+    <text x="44.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t0</text><text x="305.7" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t15</text><text x="550.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t29</text>
+    <polyline points="44.0,40.2 61.4,40.9 78.9,41.1 96.3,44.6 113.8,45.3 131.2,46.9 148.7,49.1 166.1,50.1 183.6,52.1 201.0,54.0 218.5,55.3 235.9,56.4 253.4,58.1 270.8,59.7 288.3,60.2 305.7,61.5 323.2,62.5 340.6,64.0 358.1,64.4 375.5,64.4 393.0,64.6 410.4,64.4 427.9,63.3 445.3,64.0 462.8,62.8 480.2,62.8 497.7,63.2 515.1,63.3 532.6,63.8 550.0,63.9" fill="none" stroke="#E8541C" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,15.9 61.4,17.4 78.9,19.2 96.3,20.7 113.8,22.2 131.2,22.4 148.7,23.1 166.1,24.1 183.6,24.9 201.0,26.7 218.5,28.9 235.9,29.9 253.4,30.9 270.8,30.9 288.3,32.3 305.7,33.8 323.2,36.7 340.6,37.0 358.1,38.8 375.5,40.5 393.0,40.8 410.4,41.6 427.9,42.0 445.3,42.7 462.8,44.1 480.2,45.2 497.7,45.6 515.1,44.8 532.6,46.9 550.0,47.8" fill="none" stroke="#2563EB" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,61.0 61.4,61.9 78.9,61.7 96.3,62.7 113.8,64.1 131.2,64.8 148.7,68.1 166.1,67.6 183.6,66.9 201.0,68.4 218.5,69.6 235.9,72.9 253.4,74.6 270.8,76.5 288.3,76.7 305.7,77.0 323.2,78.1 340.6,80.1 358.1,79.5 375.5,79.7 393.0,81.2 410.4,82.7 427.9,83.3 445.3,83.8 462.8,84.2 480.2,85.8 497.7,86.5 515.1,86.9 532.6,87.7 550.0,88.0" fill="none" stroke="#16A34A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,6.0 61.4,8.2 78.9,8.9 96.3,10.0 113.8,9.7 131.2,10.7 148.7,10.3 166.1,11.7 183.6,14.8 201.0,14.3 218.5,16.3 235.9,16.5 253.4,17.2 270.8,19.7 288.3,21.5 305.7,22.9 323.2,23.7 340.6,26.3 358.1,26.4 375.5,26.2 393.0,27.0 410.4,28.7 427.9,28.3 445.3,29.1 462.8,30.4 480.2,31.1 497.7,32.0 515.1,32.3 532.6,34.2 550.0,35.6" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg></div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Start (t0)</th>
+        <th>End (tN)</th>
+        <th>Delta</th>
+        <th>Trend</th>
+      </tr>
+    </thead>
+    <tbody><tr>
+          <td>China</td>
+          <td>-0.51</td>
+          <td>-1.71</td>
+          <td style="color:#DC2626">-1.19</td>
+          <td>&#9660; Falling</td>
+        </tr><tr>
+          <td>Germany</td>
+          <td>0.71</td>
+          <td>-0.90</td>
+          <td style="color:#DC2626">-1.61</td>
+          <td>&#9660; Falling</td>
+        </tr><tr>
+          <td>India</td>
+          <td>-1.56</td>
+          <td>-2.93</td>
+          <td style="color:#DC2626">-1.36</td>
+          <td>&#9660; Falling</td>
+        </tr><tr>
+          <td>Japan</td>
+          <td>1.21</td>
+          <td>-0.28</td>
+          <td style="color:#DC2626">-1.49</td>
+          <td>&#9660; Falling</td>
+        </tr></tbody>
+  </table>
+</div>
+
+<div class="section var-section">
+  <div class="var-section-header" style="border-left:4px solid #374151;">
+    <span class="var-label" style="color:#374151">Crime Rate</span>
+  </div>
+  <div class="chart-container"><svg xmlns="http://www.w3.org/2000/svg" width="560" height="110" style="display:block;max-width:100%;">
+    <line x1="44" y1="6.0" x2="550" y2="6.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="26.5" x2="550" y2="26.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="47.0" x2="550" y2="47.0" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="67.5" x2="550" y2="67.5" stroke="#EDE9E4" stroke-width="1"/><line x1="44" y1="88.0" x2="550" y2="88.0" stroke="#EDE9E4" stroke-width="1"/>
+    <text x="40" y="10.0" text-anchor="end" font-size="9" fill="#A09890">2.9</text><text x="40" y="51.0" text-anchor="end" font-size="9" fill="#A09890">1.6</text><text x="40" y="92.0" text-anchor="end" font-size="9" fill="#A09890">0.4</text>
+    <text x="44.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t0</text><text x="305.7" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t15</text><text x="550.0" y="106.0" text-anchor="middle" font-size="9" fill="#A09890">t29</text>
+    <polyline points="44.0,72.0 61.4,70.1 78.9,67.7 96.3,68.0 113.8,67.2 131.2,66.6 148.7,66.6 166.1,66.5 183.6,65.5 201.0,67.4 218.5,67.8 235.9,65.9 253.4,65.6 270.8,67.9 288.3,66.8 305.7,67.4 323.2,66.0 340.6,66.2 358.1,62.4 375.5,65.0 393.0,63.0 410.4,64.2 427.9,64.6 445.3,65.8 462.8,66.4 480.2,69.8 497.7,67.5 515.1,66.1 532.6,66.3 550.0,63.0" fill="none" stroke="#E8541C" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,68.7 61.4,67.0 78.9,66.2 96.3,66.8 113.8,69.9 131.2,73.1 148.7,73.7 166.1,72.6 183.6,72.7 201.0,74.3 218.5,74.5 235.9,74.0 253.4,74.8 270.8,71.5 288.3,71.7 305.7,70.9 323.2,71.8 340.6,72.0 358.1,69.7 375.5,65.8 393.0,66.0 410.4,66.0 427.9,63.8 445.3,66.7 462.8,67.1 480.2,64.3 497.7,64.8 515.1,63.5 532.6,64.0 550.0,62.2" fill="none" stroke="#2563EB" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,6.0 61.4,7.8 78.9,9.3 96.3,11.8 113.8,16.0 131.2,18.1 148.7,21.2 166.1,20.6 183.6,21.9 201.0,23.0 218.5,23.9 235.9,25.3 253.4,23.5 270.8,22.7 288.3,23.0 305.7,25.7 323.2,25.5 340.6,27.8 358.1,25.4 375.5,25.7 393.0,24.8 410.4,26.9 427.9,25.5 445.3,25.7 462.8,26.9 480.2,31.3 497.7,32.3 515.1,32.0 532.6,31.1 550.0,32.2" fill="none" stroke="#16A34A" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="44.0,88.0 61.4,84.7 78.9,80.6 96.3,79.6 113.8,80.1 131.2,76.1 148.7,76.6 166.1,77.2 183.6,72.3 201.0,71.7 218.5,71.1 235.9,71.8 253.4,70.1 270.8,68.1 288.3,66.1 305.7,66.9 323.2,65.5 340.6,65.7 358.1,64.6 375.5,65.3 393.0,64.5 410.4,63.3 427.9,63.8 445.3,65.5 462.8,66.6 480.2,63.9 497.7,65.9 515.1,66.5 532.6,65.0 550.0,62.1" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg></div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Start (t0)</th>
+        <th>End (tN)</th>
+        <th>Delta</th>
+        <th>Trend</th>
+      </tr>
+    </thead>
+    <tbody><tr>
+          <td>China</td>
+          <td>0.87</td>
+          <td>1.15</td>
+          <td style="color:#16A34A">+0.28</td>
+          <td>&#9650; Rising</td>
+        </tr><tr>
+          <td>Germany</td>
+          <td>0.97</td>
+          <td>1.18</td>
+          <td style="color:#16A34A">+0.20</td>
+          <td>&#9650; Rising</td>
+        </tr><tr>
+          <td>India</td>
+          <td>2.90</td>
+          <td>2.10</td>
+          <td style="color:#DC2626">-0.81</td>
+          <td>&#9660; Falling</td>
+        </tr><tr>
+          <td>Japan</td>
+          <td>0.38</td>
+          <td>1.18</td>
+          <td style="color:#16A34A">+0.80</td>
+          <td>&#9650; Rising</td>
+        </tr></tbody>
+  </table>
+</div>
+    
+<div class="section">
+  <div class="section-title">Country Profiles</div>
+  <div class="country-grid">
+<div class="country-card">
+  <div class="country-card-header">
+    <span class="country-dot" style="background:#E8541C;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:8px;"></span>
+    <span class="country-card-name">China</span>
+  </div>
+  <table class="data-table">
+    <thead>
+      <tr><th>Variable</th><th>Start</th><th>End</th><th>&Delta; Change</th></tr>
+    </thead>
+    <tbody><tr>
+          <td>GDP Growth</td>
+          <td>-0.58</td>
+          <td>0.17</td>
+          <td style="color:#16A34A">+0.75</td>
+        </tr><tr>
+          <td>Inflation</td>
+          <td>0.12</td>
+          <td>4.45</td>
+          <td style="color:#16A34A">+4.33</td>
+        </tr><tr>
+          <td>Unemployment</td>
+          <td>-0.64</td>
+          <td>-1.56</td>
+          <td style="color:#DC2626">-0.91</td>
+        </tr><tr>
+          <td>Poverty Rate</td>
+          <td>1.39</td>
+          <td>5.00</td>
+          <td style="color:#16A34A">+3.61</td>
+        </tr><tr>
+          <td>Mental Health</td>
+          <td>2.64</td>
+          <td>2.10</td>
+          <td style="color:#DC2626">-0.54</td>
+        </tr><tr>
+          <td>Urbanization</td>
+          <td>-0.51</td>
+          <td>-1.71</td>
+          <td style="color:#DC2626">-1.19</td>
+        </tr><tr>
+          <td>Crime Rate</td>
+          <td>0.87</td>
+          <td>1.15</td>
+          <td style="color:#16A34A">+0.28</td>
+        </tr></tbody>
+  </table>
+</div>
+<div class="country-card">
+  <div class="country-card-header">
+    <span class="country-dot" style="background:#2563EB;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:8px;"></span>
+    <span class="country-card-name">Germany</span>
+  </div>
+  <table class="data-table">
+    <thead>
+      <tr><th>Variable</th><th>Start</th><th>End</th><th>&Delta; Change</th></tr>
+    </thead>
+    <tbody><tr>
+          <td>GDP Growth</td>
+          <td>-1.93</td>
+          <td>0.10</td>
+          <td style="color:#16A34A">+2.04</td>
+        </tr><tr>
+          <td>Inflation</td>
+          <td>-0.14</td>
+          <td>4.80</td>
+          <td style="color:#16A34A">+4.94</td>
+        </tr><tr>
+          <td>Unemployment</td>
+          <td>-0.79</td>
+          <td>-1.17</td>
+          <td style="color:#DC2626">-0.38</td>
+        </tr><tr>
+          <td>Poverty Rate</td>
+          <td>0.48</td>
+          <td>5.00</td>
+          <td style="color:#16A34A">+4.52</td>
+        </tr><tr>
+          <td>Mental Health</td>
+          <td>3.37</td>
+          <td>2.50</td>
+          <td style="color:#DC2626">-0.86</td>
+        </tr><tr>
+          <td>Urbanization</td>
+          <td>0.71</td>
+          <td>-0.90</td>
+          <td style="color:#DC2626">-1.61</td>
+        </tr><tr>
+          <td>Crime Rate</td>
+          <td>0.97</td>
+          <td>1.18</td>
+          <td style="color:#16A34A">+0.20</td>
+        </tr></tbody>
+  </table>
+</div>
+<div class="country-card">
+  <div class="country-card-header">
+    <span class="country-dot" style="background:#16A34A;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:8px;"></span>
+    <span class="country-card-name">India</span>
+  </div>
+  <table class="data-table">
+    <thead>
+      <tr><th>Variable</th><th>Start</th><th>End</th><th>&Delta; Change</th></tr>
+    </thead>
+    <tbody><tr>
+          <td>GDP Growth</td>
+          <td>-0.23</td>
+          <td>0.17</td>
+          <td style="color:#16A34A">+0.41</td>
+        </tr><tr>
+          <td>Inflation</td>
+          <td>0.68</td>
+          <td>4.61</td>
+          <td style="color:#16A34A">+3.93</td>
+        </tr><tr>
+          <td>Unemployment</td>
+          <td>-0.25</td>
+          <td>-1.52</td>
+          <td style="color:#DC2626">-1.27</td>
+        </tr><tr>
+          <td>Poverty Rate</td>
+          <td>1.49</td>
+          <td>5.00</td>
+          <td style="color:#16A34A">+3.51</td>
+        </tr><tr>
+          <td>Mental Health</td>
+          <td>3.63</td>
+          <td>2.96</td>
+          <td style="color:#DC2626">-0.67</td>
+        </tr><tr>
+          <td>Urbanization</td>
+          <td>-1.56</td>
+          <td>-2.93</td>
+          <td style="color:#DC2626">-1.36</td>
+        </tr><tr>
+          <td>Crime Rate</td>
+          <td>2.90</td>
+          <td>2.10</td>
+          <td style="color:#DC2626">-0.81</td>
+        </tr></tbody>
+  </table>
+</div>
+<div class="country-card">
+  <div class="country-card-header">
+    <span class="country-dot" style="background:#DC2626;width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:8px;"></span>
+    <span class="country-card-name">Japan</span>
+  </div>
+  <table class="data-table">
+    <thead>
+      <tr><th>Variable</th><th>Start</th><th>End</th><th>&Delta; Change</th></tr>
+    </thead>
+    <tbody><tr>
+          <td>GDP Growth</td>
+          <td>-1.70</td>
+          <td>0.11</td>
+          <td style="color:#16A34A">+1.80</td>
+        </tr><tr>
+          <td>Inflation</td>
+          <td>0.16</td>
+          <td>4.96</td>
+          <td style="color:#16A34A">+4.80</td>
+        </tr><tr>
+          <td>Unemployment</td>
+          <td>-0.95</td>
+          <td>-0.92</td>
+          <td style="color:#16A34A">+0.03</td>
+        </tr><tr>
+          <td>Poverty Rate</td>
+          <td>0.58</td>
+          <td>5.00</td>
+          <td style="color:#16A34A">+4.42</td>
+        </tr><tr>
+          <td>Mental Health</td>
+          <td>2.09</td>
+          <td>1.72</td>
+          <td style="color:#DC2626">-0.37</td>
+        </tr><tr>
+          <td>Urbanization</td>
+          <td>1.21</td>
+          <td>-0.28</td>
+          <td style="color:#DC2626">-1.49</td>
+        </tr><tr>
+          <td>Crime Rate</td>
+          <td>0.38</td>
+          <td>1.18</td>
+          <td style="color:#16A34A">+0.80</td>
+        </tr></tbody>
+  </table>
+</div></div>
+</div>
+    
+<div class="report-footer">
+  <span>Economic Ripple &middot; System-Dynamics Macroeconomic Simulation</span>
+  <span class="footer-divider">&middot;</span>
+  <span>This report does not constitute financial advice.</span>
+</div>
+  </div>
+</body>
+</html>

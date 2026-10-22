@@ -1,0 +1,34 @@
+# --- Python (backend / simulator / shock_engine / scripts) ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Node / Next.js (economic-ripple-ui) ---
+economic-ripple-ui/node_modules/
+economic-ripple-ui/.next/
+economic-ripple-ui/out/
+economic-ripple-ui/build/
+economic-ripple-ui/.vercel/
+economic-ripple-ui/*.tsbuildinfo
+economic-ripple-ui/npm-debug.log*
+economic-ripple-ui/yarn-debug.log*
+economic-ripple-ui/yarn-error.log*
+
+# --- Editors / OS ---
+.DS_Store
+.vscode/
+.idea/
+
+# --- Env files ---
+.env
+.env.local
+.env.*.local
